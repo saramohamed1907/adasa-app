@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar';
@@ -13,5 +14,9 @@ import { Footer } from './footer/footer';
   styleUrl: './app.css',
 })
 export class App {
+  constructor(viewportScroller: ViewportScroller) {
+    viewportScroller.setOffset([0, 100]);
+  }
+
   protected readonly title = signal('Adasa-app');
 }
