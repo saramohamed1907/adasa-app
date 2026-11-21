@@ -1,0 +1,12 @@
+.hero-section {
+  background-color: #0d0d0d;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-attachment: fixed;
+}
+
+.blog-section {
+  background-color: #0a0a0a;
+}

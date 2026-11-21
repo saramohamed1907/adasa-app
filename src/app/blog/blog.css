@@ -1,0 +1,6 @@
+.cat-active {
+  background-color: #f74e00 !important;
+  color: #ffffff !important;
+  border-color: #f74e00 !important;
+  box-shadow: 0 4px 6px -1px rgba(247, 78, 0, 0.2);
+}

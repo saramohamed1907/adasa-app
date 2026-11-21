@@ -1,3 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@layer components {
+  .container-custom {
+    @apply w-full mx-auto px-10 md:px-16 lg:px-24;
+  }
+
+  .section-spacing {
+    @apply py-20;
+  }
+}
+
+body {
+  font-family:
+    'Tajawal',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}

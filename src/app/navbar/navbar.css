@@ -1,0 +1,25 @@
+.nav-link {
+  color: #a1a1aa;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.active {
+  background-color: #f74e00 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu .nav-link {
+    color: #9ca3af !important;
+    background: transparent !important;
+  }
+
+  .mobile-menu .nav-link.active {
+    color: #f74e00 !important;
+    background: rgba(247, 78, 0, 0.12) !important;
+  }
+}

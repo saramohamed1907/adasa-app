@@ -1,0 +1,112 @@
+<div dir="rtl" class="min-h-screen bg-[#0b0908] text-white">
+
+    <section class="relative overflow-hidden px-4 pt-32 pb-16">
+        <img [src]="post.image" [alt]="post.title" class="absolute inset-0 h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0b0908]/80 via-[#0b0908]/85 to-[#0b0908]"></div>
+
+        <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
+
+            <nav
+                class="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#141312]/80 px-4 py-2 text-xs sm:text-sm text-neutral-400">
+                <a routerLink="/home" class="flex items-center gap-1.5 transition hover:text-white">
+                    <i class="fa-solid fa-house text-[10px]"></i>
+                    <span>الرئيسية</span>
+                </a>
+                <i class="fa-solid fa-chevron-left text-[8px] text-neutral-600"></i>
+                <a routerLink="/blog" class="transition hover:text-white">المدونة</a>
+                <i class="fa-solid fa-chevron-left text-[8px] text-neutral-600"></i>
+                <span class="text-[#f74e00]">{{ post.category }}</span>
+            </nav>
+
+            <div class="mb-6 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-neutral-300">
+                <span class="rounded-full bg-[#f74e00] px-4 py-1.5 font-bold text-white">{{ post.category }}</span>
+                <span class="flex items-center gap-1.5">
+                    <i class="fa-regular fa-calendar"></i>
+                    {{ post.date }}
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <i class="fa-regular fa-clock"></i>
+                    {{ post.readTime }}
+                </span>
+            </div>
+
+            <h1 class="mb-10 text-3xl sm:text-5xl font-black leading-snug tracking-tight">
+                {{ post.title }}
+            </h1>
+
+            <div
+                class="inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-[#141312]/90 px-6 py-4 text-right">
+                <img [src]="post.author.avatar" [alt]="post.author.name"
+                    class="h-14 w-14 rounded-full border-2 border-[#f74e00]/50 object-cover" />
+                <div>
+                    <h2 class="text-base font-bold text-white">{{ post.author.name }}</h2>
+                    <p class="text-xs text-neutral-400">{{ post.author.role }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-4 pb-24">
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px]">
+
+            <article>
+                <blockquote
+                    class="mb-10 rounded-2xl border border-[#f74e00]/25 bg-[#1c120c]/60 p-6 text-base sm:text-lg font-medium leading-8 text-neutral-200">
+                    "{{ post.excerpt }}"
+                </blockquote>
+
+                <p class="mb-10 text-base sm:text-lg leading-9 text-neutral-300">
+                    {{ intro }}
+                </p>
+
+                @for (section of sections; track section.title; let i = $index) {
+                <h2 [id]="'section-' + i" class="mb-4 mt-10 scroll-mt-28 text-2xl sm:text-3xl font-black text-white">
+                    <span class="text-[#f74e00]">#</span> {{ section.title }}
+                </h2>
+                <p class="text-base sm:text-lg leading-9 text-neutral-300">
+                    {{ section.body }}
+                </p>
+                }
+
+                <div class="mt-14 flex flex-wrap items-center gap-2 border-t border-white/10 pt-8">
+                    <i class="fa-solid fa-tags text-sm text-[#f74e00]"></i>
+                    @for (tag of post.tags; track tag) {
+                    <span class="rounded-full border border-white/10 bg-[#161616] px-4 py-1.5 text-xs text-neutral-300">
+                        {{ tag }}
+                    </span>
+                    }
+                </div>
+
+                <div class="mt-10">
+                    <a routerLink="/blog"
+                        class="inline-flex items-center gap-2 rounded-xl bg-[#f74e00] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#f74e00]/20 transition hover:bg-[#ff5e14]">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                        <span>العودة إلى المدونة</span>
+                    </a>
+                </div>
+            </article>
+
+            <aside class="lg:sticky lg:top-28 h-fit rounded-2xl border border-white/10 bg-[#141312] p-6">
+                <h2 class="mb-5 flex items-center gap-2 text-lg font-bold text-white">
+                    <i class="fa-solid fa-list text-sm text-[#f74e00]"></i>
+                    محتويات المقال
+                </h2>
+
+                <ol class="flex flex-col gap-1">
+                    @for (section of sections; track section.title; let i = $index) {
+                    <li>
+                        <a [href]="'/blog-details/' + post.id + '#section-' + i"
+                            class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-neutral-400 transition hover:bg-[#1c120c] hover:text-[#f74e00]">
+                            <span
+                                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#f74e00]/30 text-[11px] font-bold text-[#f74e00]">
+                                {{ i + 1 }}
+                            </span>
+                            <span>{{ section.title }}</span>
+                        </a>
+                    </li>
+                    }
+                </ol>
+            </aside>
+        </div>
+    </section>
+</div>

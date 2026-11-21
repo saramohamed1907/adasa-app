@@ -1,0 +1,161 @@
+<div class="border-b border-[#262626] bg-[#0a0a0a]">
+    <div class="mx-auto max-w-7xl px-4 py-4">
+        <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <div class="relative w-full md:w-80">
+                <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="currentPage = 1"
+                    placeholder="ابحث في المقالات..."
+                    class="h-11 w-full rounded-xl border border-neutral-800 bg-[#161616] pr-4 pl-10 text-right text-sm text-white placeholder:text-neutral-500 transition focus:border-[#f74e00] focus:outline-none" />
+                <i
+                    class="fa-solid fa-magnifying-glass pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-neutral-500"></i>
+            </div>
+
+            <app-category-tabs />
+        </div>
+    </div>
+</div>
+<section class="mx-auto max-w-7xl px-4 pt-10 pb-20">
+    <div class="mb-8 flex items-center justify-between">
+        <p class="text-sm text-neutral-400">
+            عرض <strong class="font-bold text-white">{{ filteredPosts.length }}</strong> مقالات
+        </p>
+
+        <div class="flex items-center gap-3">
+            @if (searchQuery) {
+            <button type="button" (click)="resetFilters()"
+                class="inline-flex cursor-pointer items-center gap-1.5 text-xs sm:text-sm text-neutral-400 transition hover:text-white">
+                <i class="fa-solid fa-xmark text-xs"></i>
+                <span>مسح الفلاتر</span>
+            </button>
+            }
+
+            <div class="inline-flex items-center rounded-xl border border-neutral-800 bg-[#161616] p-1">
+                <button type="button" (click)="viewMode = 'grid'" aria-label="عرض شبكي" [class]="
+              viewMode === 'grid'
+                ? 'bg-[#f74e00] text-white'
+                : 'text-neutral-400 hover:text-white'
+            " class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg transition">
+                    <i class="fa-solid fa-grip text-sm"></i>
+                </button>
+
+                <button type="button" (click)="viewMode = 'list'" aria-label="عرض قائمة" [class]="
+              viewMode === 'list'
+                ? 'bg-[#f74e00] text-white'
+                : 'text-neutral-400 hover:text-white'
+            " class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg transition">
+                    <i class="fa-solid fa-bars text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div [class]="
+        viewMode === 'grid'
+          ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'
+          : 'flex flex-col gap-6'
+      ">
+        @for (post of paginatedPosts; track post.id) {
+        <a [routerLink]="['/blog-details', post.id]" [class]="
+            viewMode === 'grid'
+              ? 'flex flex-col'
+              : 'flex flex-col md:flex-row'
+          "
+            class="group overflow-hidden rounded-[26px] border border-white/10 bg-[#141312] transition-all duration-300 hover:border-orange-500/30">
+            <div [class]="
+              viewMode === 'grid'
+                ? 'h-52 w-full'
+                : 'h-52 md:h-auto md:w-80 shrink-0'
+            " class="relative overflow-hidden bg-[#1b1a18]">
+                <img [src]="post.image" [alt]="post.title"
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+
+            <div class="flex flex-1 flex-col justify-between p-6">
+                <div>
+                    <div class="mb-3 flex items-center gap-2 text-xs text-neutral-500">
+                        <span>{{ post.readTime }}</span>
+                        <span>•</span>
+                        <span>{{ post.date }}</span>
+                    </div>
+
+                    <h2
+                        class="mb-2.5 text-lg sm:text-xl font-bold leading-snug text-white transition-colors group-hover:text-[#f74e00]">
+                        {{ post.title }}
+                    </h2>
+
+                    <p class="mb-6 line-clamp-2 text-sm leading-7 text-neutral-400">
+                        {{ post.excerpt }}
+                    </p>
+                </div>
+
+                <div>
+                    <div class="mb-4 border-t border-white/10"></div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img [src]="post.author.avatar" [alt]="post.author.name"
+                                class="h-10 w-10 rounded-full border border-white/10 object-cover" />
+                            <div>
+                                <h3 class="text-sm font-bold text-white">{{ post.author.name }}</h3>
+                                <p class="text-xs text-neutral-500">{{ post.author.role }}</p>
+                            </div>
+                        </div>
+
+                        <span
+                            class="flex h-10 w-10 items-center justify-center rounded-full border border-orange-500/30 bg-[#1c120c] text-[#f74e00] transition-all duration-300 hover:bg-[#f74e00] hover:text-white">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        } @empty {
+        <div class="col-span-full flex flex-col items-center justify-center py-20 text-center">
+            <div
+                class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-neutral-800 bg-[#141312] text-2xl text-neutral-500">
+                <i class="fa-regular fa-face-frown"></i>
+            </div>
+
+            <h2 class="mb-2 text-2xl font-bold text-white">لا توجد مقالات</h2>
+
+            <p class="mb-7 text-sm text-neutral-400">
+                حاول تعديل البحث أو الفلتر للعثور على ما تبحث عنه.
+            </p>
+
+            <button type="button" (click)="resetFilters()"
+                class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#f74e00] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#f74e00]/20 transition hover:bg-[#ff5e14]">
+                <i class="fa-solid fa-rotate-right text-xs"></i>
+                <span>إعادة تعيين الفلاتر</span>
+            </button>
+        </div>
+        }
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-3">
+        <div class="flex items-center gap-2">
+            <button type="button" (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1"
+                class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-neutral-800 bg-[#161616] text-neutral-400 transition hover:border-neutral-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-40">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+
+            @for (page of pages; track page) {
+            <button type="button" (click)="currentPage = page" [class]="
+              currentPage === page
+                ? 'bg-[#f74e00] text-white border-[#f74e00] shadow-md shadow-[#f74e00]/20'
+                : 'bg-[#161616] text-neutral-300 border-neutral-800 hover:border-neutral-700 hover:text-white'
+            "
+                class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border text-sm font-bold transition">
+                {{ page }}
+            </button>
+            }
+
+            <button type="button" (click)="currentPage = currentPage + 1" [disabled]="currentPage === pages.length"
+                class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-neutral-800 bg-[#161616] text-neutral-400 transition hover:border-neutral-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-40">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+        </div>
+
+        <p class="text-xs text-neutral-500">
+            صفحة {{ currentPage }} من {{ pages.length }}
+        </p>
+    </div>
+</section>

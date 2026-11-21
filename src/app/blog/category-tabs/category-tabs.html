@@ -1,0 +1,14 @@
+<div class="flex flex-wrap gap-2">
+    <a [routerLink]="['/blog', 'جميع المقالات']" routerLinkActive="cat-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="cursor-pointer rounded-xl border px-4 py-2 text-xs sm:text-sm font-medium transition bg-[#161616] text-neutral-300 border-neutral-800 hover:border-neutral-700 hover:text-white">
+        جميع المقالات
+    </a>
+
+    @for (cat of data.categories; track cat.name) {
+    <a [routerLink]="['/blog', cat.name]" routerLinkActive="cat-active" [routerLinkActiveOptions]="{ exact: true }"
+        class="cursor-pointer rounded-xl border px-4 py-2 text-xs sm:text-sm font-medium transition bg-[#161616] text-neutral-300 border-neutral-800 hover:border-neutral-700 hover:text-white">
+        {{ cat.name }}
+    </a>
+    }
+</div>
