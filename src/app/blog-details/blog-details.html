@@ -95,7 +95,7 @@
                 <ol class="flex flex-col gap-1">
                     @for (section of sections; track section.title; let i = $index) {
                     <li>
-                        <a [href]="'/blog-details/' + post.id + '#section-' + i"
+                        <a [routerLink]="['/blog-details', post.id]" [fragment]="'section-' + i"
                             class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-neutral-400 transition hover:bg-[#1c120c] hover:text-[#f74e00]">
                             <span
                                 class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#f74e00]/30 text-[11px] font-bold text-[#f74e00]">
